@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+    <script th:src="@{js/products.js}" defer="defer"></script>
+    <title
+      th:text="'Proizvodi (' + ${productCount} + ') | Pčelarstvo Pavlović'"
+    ></title>
+  </head>
+  <body>
+    <th:block th:insert="~{fragments/header :: header}"></th:block>
+
+    <main class="flex flex-col items-center">
+      <div class="md:flex md:w-3/5 w-full md:mt-8 mb-8">
+        <div
+          x-data="{ open: true }"
+          class="md:hidden w-full p-4 dark:text-gray-50"
+        >
+          <div class="accordion">
+            <div class="accordion-item">
+              <a
+                @click="open = !open"
+                class="text-xl font-semibold flex items-center justify-between"
+                x-cloak
+              >
+                <div class="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    class="w-6 mr-2"
+                  >
+                    <path
+                      d="M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z"
+                      fill="rgba(0,0,0,1)"
+                      class="dark:fill-gray-50"
+                    ></path>
+                  </svg>
+                  Filtriraj
+                </div>
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  :class="{'rotate-180': open, 'rotate-0': !open}"
+                  class="w-6 h-6 transition-transform duration-200 transform"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </a>
+
+              <div x-show="open" class="accordion-content">
+                <form action="/proizvodi" method="get">
+                  <div class="flex flex-col gap-2 dark:text-gray-50">
+                    <h2 class="text-xl mb-2 mt-4">Kategorije</h2>
+                    <div class="flex items-center">
+                      <label
+                        class="relative flex items-center rounded-full mr-2"
+                        for="all"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer dark:border-neutral-600"
+                          id="all"
+                          name="type"
+                          value="Sve"
+                          onclick="handleCheckboxClick('all')"
+                          th:checked="${selectedType == null || selectedType == 'Sve'}"
+                        />
+                        <div
+                          class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            stroke-width="1"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </label>
+                      Sve
+                    </div>
+                    <div class="flex items-center">
+                      <label
+                        class="relative flex items-center rounded-full mr-2"
+                        for="honey"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer dark:border-neutral-600"
+                          id="honey"
+                          name="type"
+                          value="Med"
+                          onclick="handleCheckboxClick('honey')"
+                          th:checked="${selectedType == 'Med'}"
+                        />
+                        <div
+                          class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            stroke-width="1"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </label>
+                      Med
+                    </div>
+                    <div class="flex items-center">
+                      <label
+                        class="relative flex items-center rounded-full mr-2"
+                        for="propolis"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer dark:border-neutral-600"
+                          id="propolis"
+                          name="type"
+                          value="Propolis"
+                          onclick="handleCheckboxClick('propolis')"
+                          th:checked="${selectedType == 'Propolis'}"
+                        />
+                        <div
+                          class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            stroke-width="1"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </label>
+                      Propolis
+                    </div>
+                  </div>
+
+                  <div>
+                    <h2 class="text-xl mt-8 mb-2 md:mb-4">Cijena</h2>
+                    <div
+                      x-data="range()"
+                      x-init="mintrigger(); maxtrigger()"
+                      class="relative max-w-xl"
+                    >
+                      <div>
+                        <input
+                          type="range"
+                          step="5"
+                          x-bind:min="min"
+                          x-bind:max="max"
+                          x-on:input="mintrigger"
+                          x-model="minprice"
+                          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+                          x-cloak
+                        />
+
+                        <input
+                          type="range"
+                          step="5"
+                          x-bind:min="min"
+                          x-bind:max="max"
+                          x-on:input="maxtrigger"
+                          x-model="maxprice"
+                          class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+                          x-cloak
+                        />
+
+                        <div class="relative z-10 h-2">
+                          <div
+                            class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"
+                          ></div>
+
+                          <div
+                            class="absolute z-20 top-0 bottom-0 rounded-md bg-amber-300"
+                            x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"
+                          ></div>
+
+                          <div
+                            class="absolute z-30 w-6 h-6 top-0 left-0 bg-amber-300 rounded-full -mt-2 -ml-1"
+                            x-bind:style="'left: '+minthumb+'%'"
+                          ></div>
+
+                          <div
+                            class="absolute z-30 w-6 h-6 top-0 right-0 bg-amber-300 rounded-full -mt-2 -mr-3"
+                            x-bind:style="'right: '+maxthumb+'%'"
+                          ></div>
+                        </div>
+
+                        <div class="flex justify-between items-center py-5">
+                          <div>
+                            <input
+                              name="minPrice"
+                              readonly
+                              type="text"
+                              maxlength="5"
+                              x-on:input="mintrigger"
+                              x-model="minprice"
+                              class="px-3 py-2 border border-gray-200 bg-gray-50 dark:bg-neutral-900 dark:text-gray-50 dark:border-neutral-600 rounded w-16 text-center"
+                            />
+                          </div>
+                          <div>
+                            <input
+                              name="maxPrice"
+                              readonly
+                              type="text"
+                              maxlength="5"
+                              x-on:input="maxtrigger"
+                              x-model="maxprice"
+                              class="px-3 py-2 border border-gray-200 bg-gray-50 dark:bg-neutral-900 dark:text-gray-50 dark:border-neutral-600 rounded w-16 text-center"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex justify-end">
+                    <input type="submit" value="Filtriraj" class="button" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:w-1/4 w-full p-4">
+          <form action="/proizvodi" method="get">
+            <div class="flex flex-col gap-2 dark:text-gray-50">
+              <h2 class="text-xl mb-2 md:mb-4">Kategorije</h2>
+              <div class="flex items-center">
+                <label
+                  class="relative flex items-center rounded-full mr-2"
+                  for="all"
+                >
+                  <input
+                    type="checkbox"
+                    class="peer dark:border-neutral-600"
+                    id="all"
+                    name="type"
+                    value="Sve"
+                    th:checked="${selectedType == null || selectedType == 'Sve'}"
+                    onclick="handleCheckboxClick('all')"
+                  />
+                  <div
+                    class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+                Sve
+              </div>
+              <div class="flex items-center">
+                <label
+                  class="relative flex items-center rounded-full mr-2"
+                  for="honey"
+                >
+                  <input
+                    type="checkbox"
+                    class="peer dark:border-neutral-600"
+                    id="honey"
+                    name="type"
+                    value="Med"
+                    onclick="handleCheckboxClick('honey')"
+                    th:checked="${selectedType == 'Med'}"
+                  />
+                  <div
+                    class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+                Med
+              </div>
+              <div class="flex items-center">
+                <label
+                  class="relative flex items-center rounded-full mr-2"
+                  for="propolis"
+                >
+                  <input
+                    type="checkbox"
+                    class="peer dark:border-neutral-600"
+                    id="propolis"
+                    name="type"
+                    value="Propolis"
+                    onclick="handleCheckboxClick('propolis')"
+                    th:checked="${selectedType == 'Propolis'}"
+                  />
+                  <div
+                    class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+                Propolis
+              </div>
+              <div class="flex items-center">
+                <label
+                  class="relative flex items-center rounded-full mr-2"
+                  for="pelud"
+                >
+                  <input
+                    type="checkbox"
+                    class="peer dark:border-neutral-600"
+                    id="pelud"
+                    name="type"
+                    value="Pelud"
+                    onclick="handleCheckboxClick('pelud')"
+                    th:checked="${selectedType == 'Pelud'}"
+                  />
+                  <div
+                    class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </label>
+                Pelud
+              </div>
+            </div>
+            <div>
+              <h2 class="text-xl mt-8 mb-2 md:mb-4">Cijena</h2>
+              <div
+                x-data="range()"
+                x-init="mintrigger(); maxtrigger()"
+                class="relative max-w-xl"
+              >
+                <div>
+                  <input
+                    type="range"
+                    step="5"
+                    x-bind:min="min"
+                    x-bind:max="max"
+                    x-on:input="mintrigger"
+                    x-model="minprice"
+                    class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+                    x-cloak
+                  />
+
+                  <input
+                    type="range"
+                    step="5"
+                    x-bind:min="min"
+                    x-bind:max="max"
+                    x-on:input="maxtrigger"
+                    x-model="maxprice"
+                    class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+                    x-cloak
+                  />
+
+                  <div class="relative z-10 h-2">
+                    <div
+                      class="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200"
+                    ></div>
+
+                    <div
+                      class="absolute z-20 top-0 bottom-0 rounded-md bg-amber-300"
+                      x-bind:style="'right:'+maxthumb+'%; left:'+minthumb+'%'"
+                    ></div>
+
+                    <div
+                      class="absolute z-30 w-6 h-6 top-0 left-0 bg-amber-300 rounded-full -mt-2 -ml-1"
+                      x-bind:style="'left: '+minthumb+'%'"
+                    ></div>
+
+                    <div
+                      class="absolute z-30 w-6 h-6 top-0 right-0 bg-amber-300 rounded-full -mt-2 -mr-3"
+                      x-bind:style="'right: '+maxthumb+'%'"
+                    ></div>
+                  </div>
+
+                  <div class="flex justify-between items-center py-5">
+                    <div>
+                      <input
+                        name="minPrice"
+                        readonly
+                        type="text"
+                        maxlength="5"
+                        x-on:input="mintrigger"
+                        x-model="minprice"
+                        class="px-3 py-2 border border-gray-200 bg-gray-50 dark:bg-neutral-900 dark:text-gray-50 dark:border-neutral-600 rounded w-16 text-center"
+                        th:value="${selectedMinPrice}"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        name="maxPrice"
+                        readonly
+                        type="text"
+                        maxlength="5"
+                        x-on:input="maxtrigger"
+                        x-model="maxprice"
+                        class="px-3 py-2 border border-gray-200 bg-gray-50 dark:bg-neutral-900 dark:text-gray-50 dark:border-neutral-600 rounded w-16 text-center"
+                        th:value="${selectedMaxPrice}"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <input type="submit" value="Filtriraj" class="button" />
+            </div>
+          </form>
+        </div>
+        <div class="w-full p-4">
+          <div class="flex justify-between">
+            <h1 class="text-2xl font-semibold">
+              Proizvodi (<span th:text="${productCount}"></span>)
+            </h1>
+            <div class="flex justify-end text-xl dark:text-gray-50">
+              <div
+                x-data="{dropdownMenu: false, openSort: false}"
+                class="relative"
+              >
+                <div class="flex items-center">
+                  <a
+                    href="javascript:void(0)"
+                    @click="dropdownMenu = !dropdownMenu; openSort = !openSort"
+                    >Sortiraj po</a
+                  >
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    :class="{'rotate-180': openSort, 'rotate-0': !openSort}"
+                    class="w-6 h-6 transition-transform duration-200 transform"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+
+                <div
+                  x-show="dropdownMenu"
+                  class="absolute right-0 py-2 mt-2 bg-white dark:bg-neutral-900 rounded-md shadow-xl w-44"
+                  x-cloak
+                >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-base hover:bg-amber-300 hover:text-white"
+                    onclick="sortListings('min')"
+                  >
+                    Najniža cijena
+                  </a>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-base hover:bg-amber-300 hover:text-white"
+                    onclick="sortListings('max')"
+                  >
+                    Najviša cijena
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-8 mt-8">
+            <div
+              th:each="product : ${products}"
+              class="rounded-lg md:w-80 shadow-lg dark:bg-neutral-900"
+            >
+              <a th:href="@{'/proizvodi/' + ${product.id}}"
+                ><img
+                  src="img/placeholder-honey-image.jpg"
+                  alt=""
+                  class="rounded-t-lg"
+              /></a>
+              <div
+                class="flex flex-col items-center text-lg font-semibold gap-2"
+              >
+                <p th:text="${product.name}"></p>
+                <p th:text="${product.price} + ' &euro;'"></p>
+                <a
+                  th:href="@{'/proizvodi/' + ${product.id}}"
+                  class="button mb-4"
+                  >Pregled</a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            th:if="${products.size == 0}"
+            class="flex justify-center text-center min-h-[50vh]"
+          >
+            <p class="text-xl">
+              Nažalost, trenutno nemamo proizvoda koji odgovaraju vašim
+              odabranim filterima.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <th:block th:insert="~{fragments/footer :: footer}"></th:block>
+    <script>
+      function range() {
+        return {
+          minprice: 0,
+          maxprice: 20,
+          min: 0,
+          max: 20,
+          minthumb: 0,
+          maxthumb: 0,
+
+          init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const minPriceParam = urlParams.get("minPrice");
+            const maxPriceParam = urlParams.get("maxPrice");
+
+            if (minPriceParam) this.minprice = parseInt(minPriceParam);
+            if (maxPriceParam) this.maxprice = parseInt(maxPriceParam);
+
+            this.mintrigger();
+            this.maxtrigger();
+          },
+
+          mintrigger() {
+            this.minprice = Math.min(this.minprice, this.maxprice - 5);
+            this.minthumb =
+              ((this.minprice - this.min) / (this.max - this.min)) * 100;
+
+            this.updateURL();
+          },
+
+          maxtrigger() {
+            this.maxprice = Math.max(this.maxprice, this.minprice + 5);
+            this.maxthumb =
+              100 - ((this.maxprice - this.min) / (this.max - this.min)) * 100;
+
+            this.updateURL();
+          },
+
+          updateURL() {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("minPrice", this.minprice);
+            newUrl.searchParams.set("maxPrice", this.maxprice);
+            window.history.pushState({}, "", newUrl);
+          },
+        };
+      }
+    </script>
+  </body>
+</html>

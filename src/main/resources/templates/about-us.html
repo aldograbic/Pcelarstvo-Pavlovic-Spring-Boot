@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <th:block th:insert="~{fragments/head :: head}"></th:block>
+    <title>O nama | Pčelarstvo Pavlović</title>
+  </head>
+  <body>
+    <th:block th:insert="~{fragments/header :: header}"></th:block>
+
+    <main class="flex flex-col items-center p-2">
+      <h1 class="text-2xl font-semibold mt-8">O nama</h1>
+      <div class="md:flex items-center gap-8 md:w-3/5 w-full">
+        <div class="flex-1">
+          <p class="text-xl leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate
+            voluptatum mollitia eligendi. Non, ad, nisi, optio quis ea adipisci
+            ullam aliquid amet doloribus sed minima tempore quam quos fugiat ut.
+          </p>
+        </div>
+        <div class="flex-1 justify-center flex md:block">
+          <div
+            class="md:w-96 w-64 aspect-square rounded-full bg-amber-300 relative flex items-center justify-center"
+          >
+            <img
+              src="img/placeholder-about-us-img.jpg"
+              alt=""
+              class="rounded-full w-56 md:w-80 aspect-square mx-auto border border-4"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-start md:w-3/5 w-full mb-4">
+        <p class="text-xl leading-relaxed">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis
+          laboriosam quod aliquid tempora non dolore dolores dolorum qui magni?
+          Velit a incidunt officia at aspernatur voluptate voluptatem dolores,
+          maxime earum. Nesciunt quasi voluptas impedit modi minima fuga, nisi
+          minus quidem quas recusandae autem. Eligendi numquam corporis
+          necessitatibus laborum, magnam perferendis nemo, quae, dignissimos
+          excepturi quo architecto odio maiores id reprehenderit? Saepe minima
+          nostrum dolore sit quibusdam impedit, quam eaque sed praesentium
+          pariatur quae qui quo, rerum nulla deleniti ex perferendis aliquid
+          ipsum! Veritatis perspiciatis corporis fugit mollitia esse totam
+          saepe. Voluptatem suscipit exercitationem nam commodi ipsa at voluptas
+          veniam error possimus consequatur ab reiciendis ad, nemo ratione
+          perferendis laboriosam voluptate consequuntur dolore quam autem
+          eligendi vel adipisci vitae nobis. Molestias! Excepturi non accusamus
+          dicta illum voluptatem eos perspiciatis tempora, ea aspernatur
+          reprehenderit nulla a eius iusto, minima voluptatibus debitis ex qui
+          dolore neque. Veniam blanditiis id sed nisi optio alias.
+        </p>
+      </div>
+      <div id="gallery" class="md:w-3/5 w-full">
+        <h2 class="flex justify-center text-2xl font-semibold mb-8">
+          Galerija
+        </h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+          <a href="img/placeholder-gallery-img.jpeg" target="_blank"
+            ><img
+              src="img/placeholder-gallery-img.jpeg"
+              alt=""
+              class="object-cover rounded-lg shadow-2xl hover:opacity-80 hover:scale-105 ease-in duration-300"
+          /></a>
+        </div>
+      </div>
+    </main>
+
+    <th:block th:insert="~{fragments/footer :: footer}"></th:block>
+  </body>
+</html>

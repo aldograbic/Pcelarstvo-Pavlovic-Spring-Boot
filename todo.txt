@@ -1,0 +1,15 @@
+index
+____________________________________
+popuniti tekstom
+
+o nama
+____________________________________
+popuniti tekstom
+popuniti slikama
+
+ostalo
+____________________________________
+dodat favicon
+dodat logo
+dodat pravi mail
+dodat facebook/instagram link u footer

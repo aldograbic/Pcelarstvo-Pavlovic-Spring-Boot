@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  main {
+    @apply dark:bg-neutral-800;
+  }
+
+  p {
+    @apply dark:text-gray-200;
+  }
+
+  h1,
+  h2,
+  label {
+    @apply dark:text-gray-50;
+  }
+
+  .button {
+    @apply cursor-pointer bg-amber-400 font-semibold text-white pb-2 pt-2 pl-6 pr-6 rounded-lg shadow;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .button:hover {
+    @apply bg-amber-600 shadow-md;
+  }
+
+  .input {
+    @apply flex items-center justify-between bg-gray-50 border border-gray-300 rounded-md p-2.5 dark:bg-neutral-900 dark:text-gray-50 dark:border-neutral-600;
+  }
+
+  .input:focus {
+    @apply shadow shadow-amber-300 border-amber-400 outline-none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    @apply w-6 h-6 appearance-none pointer-events-auto;
+  }
+
+  input[type="checkbox"] {
+    @apply h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all checked:border-amber-400 checked:bg-amber-400;
+  }
+
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .fade-in {
+    @apply md:opacity-0 md:translate-y-[20px];
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+
+  .fade-in.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
