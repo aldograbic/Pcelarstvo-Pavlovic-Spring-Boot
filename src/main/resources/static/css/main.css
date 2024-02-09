@@ -729,10 +729,6 @@ input[type="checkbox"]:checked {
   right: 50%;
 }
 
-.right-2 {
-  right: 0.5rem;
-}
-
 .right-3\/4 {
   right: 75%;
 }
@@ -743,10 +739,6 @@ input[type="checkbox"]:checked {
 
 .top-0 {
   top: 0px;
-}
-
-.top-2 {
-  top: 0.5rem;
 }
 
 .top-2\/4 {
@@ -1098,6 +1090,10 @@ input[type="checkbox"]:checked {
           appearance: none;
 }
 
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -1341,10 +1337,6 @@ input[type="checkbox"]:checked {
 
 .pl-2 {
   padding-left: 0.5rem;
-}
-
-.pt-4 {
-  padding-top: 1rem;
 }
 
 .pt-8 {
@@ -1759,6 +1751,10 @@ input[type="checkbox"]:checked {
 
   .md\:w-3\/5 {
     width: 60%;
+  }
+
+  .md\:w-4\/5 {
+    width: 80%;
   }
 
   .md\:w-80 {

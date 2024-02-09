@@ -4,11 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 
 public class ReviewRowMapper implements RowMapper<Review>{
 
     @Override
-    public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Review mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         Review review = new Review();
         review.setName(rs.getString("name"));
         review.setStars(rs.getInt("stars"));

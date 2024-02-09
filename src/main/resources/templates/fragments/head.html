@@ -7,21 +7,30 @@
   />
   <meta
     name="keywords"
-    content="med, propolis, pčelinji proizvodi, prirodni med, zdravlje, pčelarstvo, pčele, kupovina, online trgovina, brza dostava"
+    content="med, propolis, Dalmacija, Makarska, Velebit, pčelinji proizvodi, prirodni med, zdravlje, pčelarstvo, pčele, kupovina, online trgovina, brza dostava"
   />
   <meta name="author" content="Aldo Grabić" />
-  <link href="css/main.css" rel="stylesheet" />
+
+  <link th:href="@{/css/main.css}" rel="stylesheet" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
+    rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+    as="style"
+  />
+  <link
     href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
     rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
   />
   <script
-    defer
     src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    defer="defer"
   ></script>
-  <script th:src="@{js/darkLightToggle.js}" defer="defer"></script>
+  <script th:src="@{/js/darkLightToggle.js}" defer="defer"></script>
   <script>
     if (
       localStorage.getItem("color-theme") === "dark" ||
