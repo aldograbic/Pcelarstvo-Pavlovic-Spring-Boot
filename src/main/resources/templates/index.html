@@ -48,7 +48,7 @@
       </svg>
       <div class="flex min-h-[70vh] items-center fade-in p-4 pt-8">
         <div class="md:basis-1/2 ml-0 md:ml-96 flex flex-col gap-8 z-10">
-          <p class="text-6xl">Pčelarstvo Pavlović</p>
+          <p class="text-6xl font-semibold">Pčelarstvo Pavlović</p>
           <p class="text-xl leading-relaxed">
             Zaronite u raskošni svijet naših vrhunskih dalmatinskih proizvoda od
             meda, gdje je najčišća slatkoća prirode u središtu pozornosti.
@@ -69,12 +69,12 @@
         </div>
       </div>
       <div class="flex flex-col items-center p-8 min-h-[35vh] fade-in">
-        <h1 class="text-2xl">Zašto odabrati naš med?</h1>
+        <h1 class="text-2xl font-semibold">Zašto odabrati naš med?</h1>
         <div class="grid md:flex gap-16 mt-8">
           <div class="flex flex-col items-center text-center">
             <img src="img/beehive-icon.png" alt="Ikona košnica" />
-            <h2 class="text-xl">Čisto i prirodno</h2>
-            <p>
+            <h2 class="text-xl mb-2">Čisto i prirodno</h2>
+            <p class="text-sm">
               Naš med počinje u srcu prirode, gdje pčele neumorno rade u
               netaknutim košnicama, stvarajući med čist i prirodan kao na dan
               kada je ubran. Doživite nepatvorenu dobrotu najslađeg dara majke
@@ -83,8 +83,8 @@
           </div>
           <div class="flex flex-col items-center text-center">
             <img src="img/honeycomb-icon.png" alt="Ikona saće košnice" />
-            <h2 class="text-xl">Okusna složenost</h2>
-            <p>
+            <h2 class="text-xl mb-2">Okusna složenost</h2>
+            <p class="text-sm">
               Svaka ćelija saća sadrži svijet jedinstvenih okusa i aroma,
               prikupljih na vrletima Biokova, Dalmatinske zagore te na
               dalmatinskim otocima. S našim medom ćete uživati u bogatoj i
@@ -93,8 +93,8 @@
           </div>
           <div class="flex flex-col items-center text-center">
             <img src="img/jar-of-honey-icon.png" alt="Ikona tegla meda" />
-            <h2 class="text-xl">Izrađeno s pažnjom</h2>
-            <p>
+            <h2 class="text-xl mb-2">Izrađeno s pažnjom</h2>
+            <p class="text-sm">
               Naš med pažljivo je prikupljen i promišljeno punjen u boce,
               čuvajući svu svoju prirodnu dobrotu. Sa svakom staklenkom dobivate
               plod naše predanosti kvaliteti, okusu i vašem zadovoljstvu.
@@ -102,10 +102,10 @@
           </div>
           <div class="flex flex-col items-center text-center">
             <img src="img/fast-delivery-icon.png" alt="Ikona brza dostava" />
-            <h2 class="text-xl">Brzo do vaših vrata</h2>
-            <p>
+            <h2 class="text-xl mb-2">Brzo do vaših vrata</h2>
+            <p class="text-sm">
               Razumijemo vašu želju za našim slatkim medom. Zato osiguravamo
-              brzu dostavu kako biste u najkraćem mogućem roku mogli uživati ​​u
+              brzu dostavu kako biste u najkraćem mogućem roku mogli uživati u
               slasti naših proizvoda. Vaše zadovoljstvo naš je prioritet.
             </p>
           </div>
@@ -114,27 +114,29 @@
       <div
         class="flex flex-col md:items-center p-4 min-h-[35vh] bg-amber-300 fade-in"
       >
-        <h1 class="text-2xl dark:text-black text-center">
+        <h1 class="text-2xl font-semibold dark:text-black text-center">
           Najprodavaniji proizvodi
         </h1>
         <div class="flex gap-8 mt-8 overflow-x-auto">
           <div
             th:each="product : ${featuredProducts}"
-            class="rounded-lg w-48 shadow-xl bg-white flex-shrink-0"
+            class="rounded-lg w-64 shadow-xl bg-white flex-shrink-0"
           >
             <a th:href="@{'/proizvodi/' + ${product.id}}"
               ><img
                 th:src="${'img/' + product.image}"
-                alt="Slika proizvoda"
+                th:alt="${product.name}"
                 class="rounded-t-lg"
             /></a>
-            <div class="flex flex-col items-center text-lg font-semibold gap-2">
+            <div
+              class="flex flex-col items-center text-lg font-semibold p-2 gap-2"
+            >
               <p class="dark:text-black" th:text="${product.name}"></p>
               <p
                 class="dark:text-black"
                 th:text="${product.price} + ' &euro;'"
               ></p>
-              <a th:href="@{'/proizvodi/' + ${product.id}}" class="button mb-4"
+              <a th:href="@{'/proizvodi/' + ${product.id}}" class="button"
                 >Pregled</a
               >
             </div>
@@ -142,7 +144,7 @@
         </div>
       </div>
       <div class="flex flex-col items-center p-8 min-h-[35vh] fade-in">
-        <h1 class="text-2xl mb-16 text-center">
+        <h1 class="text-2xl font-semibold mb-16 text-center">
           Imate pitanja? Kontaktirajte nas!
         </h1>
         <div class="relative w-full md:w-1/3 flex justify-center">

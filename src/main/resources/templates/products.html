@@ -2,7 +2,7 @@
 <html lang="hr">
   <head>
     <th:block th:insert="~{fragments/head :: head}"></th:block>
-    <script th:src="@{js/products.js}" defer="defer"></script>
+    <script th:src="@{/js/products.js}" defer="defer"></script>
     <title
       th:text="'Proizvodi (' + ${productCount} + ') | Pčelarstvo Pavlović'"
     ></title>
@@ -534,22 +534,20 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <div
               th:each="product : ${products}"
-              class="rounded-lg md:w-4/5 shadow-lg dark:bg-neutral-900"
+              class="rounded-lg md:w-4/5 shadow-lg dark:bg-neutral-900 dark:border dark:border-neutral-600"
             >
               <a th:href="@{'/proizvodi/' + ${product.id}}"
                 ><img
-                  src="img/placeholder-honey-image.jpg"
-                  alt=""
+                  th:src="@{/img/placeholder-honey-image.jpg}"
+                  th:alt="${product.name}"
                   class="rounded-t-lg"
               /></a>
               <div
-                class="flex flex-col items-center text-lg font-semibold gap-2"
+                class="flex flex-col items-center text-lg font-semibold p-2 gap-2"
               >
                 <p th:text="${product.name}"></p>
                 <p th:text="${product.price} + ' &euro;'"></p>
-                <a
-                  th:href="@{'/proizvodi/' + ${product.id}}"
-                  class="button mb-4"
+                <a th:href="@{'/proizvodi/' + ${product.id}}" class="button"
                   >Pregled</a
                 >
               </div>

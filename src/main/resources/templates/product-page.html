@@ -270,7 +270,7 @@
             </div>
             <div
               th:each="review : ${limitedProductReviews}"
-              class="shadow-md border dark:border-neutral-600 p-4 text-lg gap-4 flex flex-col"
+              class="shadow-md border dark:bg-neutral-900 rounded-lg dark:border-neutral-600 p-4 text-lg gap-4 flex flex-col"
             >
               <div class="flex justify-between">
                 <p th:text="${review.name}" class="font-semibold"></p>
@@ -376,7 +376,7 @@
                     </div>
                     <div
                       th:each="review : ${allProductReviews}"
-                      class="shadow-md mb-4 border dark:border-neutral-600 p-4 text-lg gap-4 flex flex-col"
+                      class="shadow-md mb-4 border dark:bg-neutral-900 rounded-lg dark:border-neutral-600 p-4 text-lg gap-4 flex flex-col"
                     >
                       <div class="flex justify-between">
                         <p th:text="${review.name}" class="font-semibold"></p>
