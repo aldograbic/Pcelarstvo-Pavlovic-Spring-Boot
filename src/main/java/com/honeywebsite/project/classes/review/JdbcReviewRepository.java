@@ -20,6 +20,7 @@ public class JdbcReviewRepository implements ReviewRepository{
         jdbcTemplate.update(sql, review.getName(), review.getStars(), review.getMessage(), review.getProductId());
     }
 
+    @SuppressWarnings("unused")
     @Override
     public double getAverageReviewById(int productId) {
         String sql = "SELECT ROUND(AVG(stars), 2) FROM reviews WHERE product_id = ?";

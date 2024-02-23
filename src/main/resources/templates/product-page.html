@@ -35,12 +35,13 @@
           <span class="font-medium" th:text="${successMessage}"></span>
         </div>
       </div>
+      <!-- th:src="'/img/' + ${product.image}" -->
       <div class="md:flex flex-col gap-8 md:w-3/5 w-full mt-0 md:mt-8 mb-8">
         <div class="md:flex items-center gap-8">
           <img
-            th:src="'/img/' + ${product.image}"
+            src="/img/med-primjer.jpeg"
             alt="Slika proizvoda"
-            class="md:w-96 w-full rounded-b-lg md:rounded-lg"
+            class="md:w-96 w-full md:rounded-lg pointer-events-none"
           />
           <div class="flex flex-col gap-4 p-2">
             <div class="flex items-center">
@@ -67,192 +68,90 @@
               th:text="${product.price} + ' &euro;'"
               class="text-2xl font-semibold"
             ></p>
-            <p th:text="${'Pakiranje: ' + product.kilograms + ' kg'}"></p>
+            <p th:text="${'Pakiranje: ' + product.kilograms + ' g'}"></p>
             <p th:text="${'Kategorija: ' + product.type}"></p>
             <p th:if="${product.onStock}" class="flex items-center">
-              <img src="/img/green-dot-icon.png" alt="Dostupno" class="w-8" />
-              Dostupno
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-green-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+
+              Dostupno odmah
             </p>
             <p th:unless="${product.onStock}" class="flex items-center">
-              <img src="/img/red-dot-icon.png" alt="Nedostupno" class="w-8" />
-              Nedostupno
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-red-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+
+              Trenutno nedostupno
             </p>
-
-            <div x-data="{ modelOpen: false }">
-              <button
-                class="button text-center w-full"
-                @click="modelOpen =!modelOpen"
-              >
-                Naruči
-              </button>
-
-              <div
-                x-show="modelOpen"
-                class="fixed inset-0 z-50 overflow-y-auto"
-                aria-labelledby="modal-title"
-                role="dialog"
-                aria-modal="true"
-              >
-                <div
-                  class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0"
-                >
-                  <div
-                    x-cloak
-                    @click="modelOpen = false"
-                    x-show="modelOpen"
-                    x-transition:enter="transition ease-out duration-300 transform"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-200 transform"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
-                    class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-40"
-                    aria-hidden="true"
-                  ></div>
-
-                  <div
-                    x-cloak
-                    x-show="modelOpen"
-                    x-transition:enter="transition ease-out duration-300 transform"
-                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                    x-transition:leave="transition ease-in duration-200 transform"
-                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    class="inline-block w-full max-w-xl p-8 my-12 overflow-hidden text-left transition-all transform bg-white dark:bg-neutral-800 rounded-lg shadow-xl 2xl:max-w-2xl"
+            <form th:action="@{/kosarica/dodaj}" method="post">
+              <div class="mt-8">
+                <label for="amount">Količina</label>
+                <div class="flex items-center">
+                  <span
+                    class="p-2.5 bg-gray-200 dark:bg-neutral-900 dark:text-gray-50 cursor-pointer rounded-s-lg text-xl"
+                    id="decrement"
                   >
-                    <div class="flex items-center justify-between space-x-4">
-                      <h1 class="text-xl font-medium text-gray-800">
-                        Proizvod: <span th:text="${product.name}"></span>
-                      </h1>
-
-                      <button
-                        @click="modelOpen = false"
-                        class="text-gray-600 focus:outline-none hover:text-gray-700"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-6 h-6 dark:text-gray-50"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-
-                    <form
-                      th:action="@{'/proizvodi/' + ${product.id} + '/naruci'}"
-                      method="post"
-                      class="mt-6"
-                    >
-                      <div>
-                        <label for="firstName">Ime *</label>
-                        <input
-                          name="firstName"
-                          id="firstName"
-                          type="text"
-                          class="input w-full"
-                          required
-                          autocomplete="given-name"
-                        />
-                      </div>
-
-                      <div class="mt-4">
-                        <label for="lastName">Prezime *</label>
-                        <input
-                          name="lastName"
-                          id="lastName"
-                          type="text"
-                          class="input w-full"
-                          required
-                          autocomplete="family-name"
-                        />
-                      </div>
-
-                      <div class="mt-4">
-                        <label for="address">Adresa *</label>
-                        <input
-                          name="address"
-                          id="address"
-                          type="text"
-                          class="input w-full"
-                          required
-                          autocomplete="street-address"
-                        />
-                      </div>
-
-                      <div class="mt-4 mb-4">
-                        <label for="city">Grad *</label>
-                        <input
-                          name="city"
-                          id="city"
-                          type="text"
-                          class="input w-full"
-                          required
-                          autocomplete="address-level2"
-                        />
-                      </div>
-
-                      <div class="mt-4 mb-4">
-                        <label for="message">Poruka (neobavezno)</label>
-                        <textarea
-                          id="message"
-                          name="message"
-                          placeholder="..."
-                          rows="4"
-                          class="input w-full h-48 resize-none"
-                        ></textarea>
-                      </div>
-
-                      <div>
-                        <label for="amount">Količina</label>
-                        <div class="flex items-center">
-                          <span
-                            class="p-2.5 bg-gray-200 dark:bg-neutral-900 dark:text-gray-50 cursor-pointer rounded-s-lg text-xl"
-                            id="decrement"
-                          >
-                            -
-                          </span>
-                          <input
-                            id="amount"
-                            name="amount"
-                            type="text"
-                            class="input w-10 text-center rounded-none border-2 border-gray-200 dark:border-neutral-800"
-                            readonly
-                          />
-                          <span
-                            class="p-2.5 bg-gray-200 dark:bg-neutral-900 dark:text-gray-50 cursor-pointer rounded-e-lg text-xl"
-                            id="increment"
-                          >
-                            +
-                          </span>
-                        </div>
-                      </div>
-
-                      <div class="flex justify-end text-2xl dark:text-gray-50">
-                        <span id="totalPrice"></span>
-                        <input
-                          type="hidden"
-                          name="totalPrice"
-                          id="hiddenTotalPrice"
-                        />
-                      </div>
-
-                      <div class="flex justify-end mt-6">
-                        <input type="submit" value="Naruči" class="button" />
-                      </div>
-                    </form>
-                  </div>
+                    -
+                  </span>
+                  <input
+                    id="amount"
+                    name="amount"
+                    type="text"
+                    class="input w-10 text-center rounded-none border-2 border-gray-200 dark:border-neutral-800"
+                    readonly
+                  />
+                  <span
+                    class="p-2.5 bg-gray-200 dark:bg-neutral-900 dark:text-gray-50 cursor-pointer rounded-e-lg text-xl"
+                    id="increment"
+                  >
+                    +
+                  </span>
                 </div>
               </div>
-            </div>
+
+              <input type="hidden" name="totalPrice" id="hiddenTotalPrice" />
+              <input type="hidden" name="productId" th:value="${product.id}" />
+
+              <button
+                type="submit"
+                class="button flex items-center justify-center gap-2 text-center w-full mt-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6 hover:cursor-pointer"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M7 22q-.825 0-1.412-.587T5 20q0-.825.588-1.412T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20q0-.825.588-1.412T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22M6.15 6l2.4 5h7l2.75-5zM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25zm3.35 7h7z"
+                  />
+                </svg>
+                Dodaj u košaricu
+              </button>
+            </form>
           </div>
         </div>
         <div class="p-2">
@@ -418,10 +317,11 @@
           <form
             th:action="@{'/proizvodi/' + ${product.id} + '/recenzija'}"
             method="post"
+            class="space-y-4"
           >
             <input type="hidden" id="stars" name="stars" value="0" />
 
-            <div class="flex flex-col mb-4">
+            <div>
               <label for="name">Ime i prezime *</label>
               <input
                 type="text"
@@ -429,12 +329,12 @@
                 name="name"
                 placeholder="Vaše ime i prezime"
                 required
-                class="input"
+                class="input w-full"
                 autocomplete="name"
               />
             </div>
             <p>Ocjena *</p>
-            <div x-data="starRating()" class="flex mb-4">
+            <div x-data="starRating()" class="flex">
               <template x-for="star in stars" :key="star" id="stars">
                 <svg
                   @click="setRating(star)"
@@ -452,7 +352,7 @@
               </template>
             </div>
 
-            <div class="flex flex-col mb-4">
+            <div>
               <label for="message">Poruka (neobavezno)</label>
               <textarea
                 id="message"
@@ -474,7 +374,6 @@
 
     <script th:inline="javascript">
       var amountInput = document.getElementById("amount");
-      var totalPriceSpan = document.getElementById("totalPrice");
       var hiddenTotalPriceInput = document.getElementById("hiddenTotalPrice");
 
       var productPrice = /*[[${product.price}]]*/ 0;
@@ -483,7 +382,6 @@
 
       function updateTotalPrice() {
         var totalPrice = amount * productPrice;
-        totalPriceSpan.textContent = totalPrice.toFixed(2) + " €";
         hiddenTotalPriceInput.value = totalPrice;
       }
 

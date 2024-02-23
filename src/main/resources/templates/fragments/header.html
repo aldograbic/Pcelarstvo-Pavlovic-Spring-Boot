@@ -3,12 +3,12 @@
     <div class="hidden md:flex items-center justify-between">
       <a href="/"
         ><img
-          th:src="@{/img/logo-pcelarstvo-pavlovic.png}"
+          th:src="@{/img/logo.webp}"
           alt="Logo Pčelarstvo Pavlović"
           class="w-20 ml-8"
       /></a>
       <div class="p-8">
-        <ul class="flex items-center gap-8">
+        <ul class="flex items-center gap-8" x-data="{ cart: false }">
           <li class="hover:underline underline-offset-8">
             <a href="/">Naslovna</a>
           </li>
@@ -20,6 +20,94 @@
           </li>
           <li class="hover:underline underline-offset-8">
             <a href="/kontakt">Kontakt</a>
+          </li>
+          <li class="ml-16 relative">
+            <div>
+              <svg
+                @click="cart = !cart"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 hover:cursor-pointer"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M7 22q-.825 0-1.412-.587T5 20q0-.825.588-1.412T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20q0-.825.588-1.412T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22M6.15 6l2.4 5h7l2.75-5zM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25zm3.35 7h7z"
+                />
+              </svg>
+
+              <div
+                x-show="cart"
+                class="absolute right-0 p-4 mt-2 bg-white dark:bg-neutral-900 rounded-md shadow-xl w-96 z-20"
+                x-cloak
+              >
+                <h2 class="text-base font-semibold">Moja košarica</h2>
+                <hr class="mt-3" />
+                <div th:if="${cart.size() > 0}">
+                  <div
+                    th:each="item : ${cart}"
+                    class="text-base py-4 gap-2 flex justify-between"
+                  >
+                    <div class="flex gap-2">
+                      <img
+                        th:if="${item.product != null}"
+                        th:src="@{'/img/' + ${item.product.image}}"
+                        alt=""
+                        class="w-16"
+                      />
+
+                      <p th:text="|${item.quantity}x ${item.product.name}|"></p>
+                    </div>
+                    <div class="flex gap-2">
+                      <p
+                        th:text="${item.product.price * item.quantity + ' €'}"
+                      ></p>
+                      <form th:action="@{/kosarica/izbrisi}" method="post">
+                        <input
+                          type="hidden"
+                          name="productId"
+                          th:value="${item.product.id}"
+                        />
+                        <button
+                          type="submit"
+                          class="bg-transparent border-none"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                            />
+                          </svg>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  <hr class="mb-3" />
+                  <div class="flex items-center justify-between">
+                    <p class="text-base font-semibold">Ukupno</p>
+                    <p
+                      th:text="${totalCartPrice + ' €'}"
+                      class="font-semibold"
+                    ></p>
+                  </div>
+                  <form action="/kosarica/kupnja" method="get">
+                    <button class="button text-base w-full mt-2">
+                      Idi na plaćanje
+                    </button>
+                  </form>
+                </div>
+                <p th:unless="${cart.size() > 0}" class="text-base pt-4">
+                  Vaša košarica je prazna
+                </p>
+              </div>
+            </div>
           </li>
           <li>
             <a
@@ -60,35 +148,116 @@
     >
       <a href="/"
         ><img
-          th:src="@{/img/logo-pcelarstvo-pavlovic.png}"
+          th:src="@{/img/logo.webp}"
           alt="Logo Pčelarstvo Pavlović"
           class="w-16 ml-2"
       /></a>
-      <button
-        @click="isOpen = !isOpen"
-        type="button"
-        class="inline-flex items-center justify-center p-2 mr-2 w-10 h-10"
-        :aria-expanded="isOpen ? 'true' : 'false'"
-      >
-        <span class="sr-only">Navigacijska traka</span>
-        <template x-if="!isOpen">
+      <div class="flex items-center gap-4" x-data="{ cart: false }">
+        <div class="ml-16 relative">
           <svg
-            class="w-5 h-5"
-            aria-hidden="true"
+            @click="cart = !cart"
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
+            class="w-6 h-6 hover:cursor-pointer"
+            viewBox="0 0 24 24"
           >
             <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
-              d="M1 1h15M1 7h15M1 13h15"
+              fill="currentColor"
+              d="M7 22q-.825 0-1.412-.587T5 20q0-.825.588-1.412T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20q0-.825.588-1.412T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22M6.15 6l2.4 5h7l2.75-5zM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25zm3.35 7h7z"
             />
           </svg>
-        </template>
-      </button>
+
+          <div
+            x-show="cart"
+            class="absolute right-0 p-4 mt-2 bg-white dark:bg-neutral-900 rounded-md shadow-xl w-[22rem] z-20"
+            x-cloak
+          >
+            <h2 class="text-base font-semibold">Moja košarica</h2>
+            <hr class="mt-3" />
+            <div th:if="${cart.size() > 0}">
+              <div
+                th:each="item : ${cart}"
+                class="text-base py-4 gap-2 flex justify-between"
+              >
+                <div class="flex gap-2">
+                  <img
+                    th:if="${item.product != null}"
+                    th:src="@{'/img/' + ${item.product.image}}"
+                    alt=""
+                    class="w-16"
+                  />
+
+                  <p th:text="|${item.quantity}x ${item.product.name}|"></p>
+                </div>
+                <div class="flex gap-2">
+                  <p th:text="${item.product.price * item.quantity + ' €'}"></p>
+                  <form th:action="@{/kosarica/izbrisi}" method="post">
+                    <input
+                      type="hidden"
+                      name="productId"
+                      th:value="${item.product.id}"
+                    />
+                    <button type="submit" class="bg-transparent border-none">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                        />
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <hr class="mb-3" />
+              <div class="flex items-center justify-between">
+                <p class="text-base font-semibold">Ukupno</p>
+                <p th:text="${totalCartPrice + ' €'}" class="font-semibold"></p>
+              </div>
+              <form action="/kosarica/kupnja" method="get">
+                <button class="button text-base w-full mt-2">
+                  Idi na plaćanje
+                </button>
+              </form>
+            </div>
+            <p th:unless="${cart.size() > 0}" class="text-base pt-4">
+              Vaša košarica je prazna
+            </p>
+          </div>
+        </div>
+
+        <button
+          @click="isOpen = !isOpen"
+          type="button"
+          class="inline-flex items-center justify-center p-2 mr-2 w-10 h-10"
+          :aria-expanded="isOpen ? 'true' : 'false'"
+        >
+          <span class="sr-only">Navigacijska traka</span>
+          <template x-if="!isOpen">
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </template>
+        </button>
+      </div>
 
       <div
         x-show="isOpen"
@@ -98,7 +267,7 @@
         <div class="w-full h-full bg-amber-300">
           <a href="/"
             ><img
-              th:src="@{/img/logo-pcelarstvo-pavlovic.png}"
+              th:src="@{/img/logo.webp}"
               alt="Logo Pčelarstvo Pavlović"
               class="w-16 ml-2"
           /></a>
@@ -150,6 +319,7 @@
                 >Kontakt</a
               >
             </li>
+
             <hr class="my-6 border-black mx-4" />
 
             <div

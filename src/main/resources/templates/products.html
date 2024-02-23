@@ -536,18 +536,21 @@
               th:each="product : ${products}"
               class="rounded-lg md:w-4/5 shadow-lg dark:bg-neutral-900 dark:border dark:border-neutral-600"
             >
-              <a th:href="@{'/proizvodi/' + ${product.id}}"
+              <a
+                th:href="@{'/proizvodi/' + ${product.type.toLowerCase()} + '-' + ${product.id}}"
                 ><img
                   th:src="@{/img/placeholder-honey-image.jpg}"
                   th:alt="${product.name}"
-                  class="rounded-t-lg"
+                  class="rounded-t-lg pointer-events-none"
               /></a>
               <div
                 class="flex flex-col items-center text-lg font-semibold p-2 gap-2"
               >
                 <p th:text="${product.name}"></p>
                 <p th:text="${product.price} + ' &euro;'"></p>
-                <a th:href="@{'/proizvodi/' + ${product.id}}" class="button"
+                <a
+                  th:href="@{'/proizvodi/' + ${product.type.toLowerCase()} + '-' + ${product.id}}"
+                  class="button"
                   >Pregled</a
                 >
               </div>
@@ -576,6 +579,7 @@
           max: 20,
           minthumb: 0,
           maxthumb: 0,
+          userInteracted: false,
 
           init() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -594,7 +598,9 @@
             this.minthumb =
               ((this.minprice - this.min) / (this.max - this.min)) * 100;
 
-            this.updateURL();
+            if (this.userInteracted) {
+              this.updateURL();
+            }
           },
 
           maxtrigger() {
@@ -602,7 +608,9 @@
             this.maxthumb =
               100 - ((this.maxprice - this.min) / (this.max - this.min)) * 100;
 
-            this.updateURL();
+            if (this.userInteracted) {
+              this.updateURL();
+            }
           },
 
           updateURL() {
@@ -613,6 +621,22 @@
           },
         };
       }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const priceRange = range();
+        const minSlider = document.querySelector(
+          'input[type="range"][x-model="minprice"]'
+        );
+        const maxSlider = document.querySelector(
+          'input[type="range"][x-model="maxprice"]'
+        );
+        minSlider.addEventListener("mousedown", () => {
+          priceRange.userInteracted = true;
+        });
+        maxSlider.addEventListener("mousedown", () => {
+          priceRange.userInteracted = true;
+        });
+      });
     </script>
   </body>
 </html>

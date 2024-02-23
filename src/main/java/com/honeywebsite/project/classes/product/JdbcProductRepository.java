@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.honeywebsite.project.classes.purchase.Purchase;
-
 @Repository
 public class JdbcProductRepository implements ProductRepository{
     
@@ -38,12 +36,7 @@ public class JdbcProductRepository implements ProductRepository{
         return jdbcTemplate.query(sql, new ProductRowMapper());
     }
     
-    @Override
-    public void savePurchaseDetails(Purchase purchase) {
-        String sql = "INSERT INTO purchases (first_name, last_name, address, city, message, amount, total_price, product_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, purchase.getFirstName(), purchase.getLastName(), purchase.getAddress(), purchase.getCity(), purchase.getMessage(), purchase.getAmount(), purchase.getTotalPrice(), purchase.getProductId());
-    }
-
+    @SuppressWarnings("null")
     @Override
     public List<Product> filterByTypeAndPrice(String type, Double minPrice, Double maxPrice) {
         StringBuilder sqlBuilder = new StringBuilder("SELECT id, name, type, kilograms, description, price, image, on_stock, is_featured FROM products WHERE 1=1");
