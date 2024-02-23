@@ -17,21 +17,21 @@ public class JdbcProductRepository implements ProductRepository{
 
     @Override
     public List<Product> getProducts() {
-        String sql = "SELECT id, name, type, kilograms, description, price, image, on_stock, is_featured FROM products";
+        String sql = "SELECT id, name, type, grams, description, price, image, on_stock, is_featured FROM products";
 
         return jdbcTemplate.query(sql, new ProductRowMapper());
     }
 
     @Override
     public Product getProductById(int id) {
-        String sql = "SELECT id, name, type, kilograms, description, price, image, on_stock, is_featured FROM products WHERE id = ?";
+        String sql = "SELECT id, name, type, grams, description, price, image, on_stock, is_featured FROM products WHERE id = ?";
 
         return jdbcTemplate.queryForObject(sql, new ProductRowMapper(), id);
     }
 
     @Override
     public List<Product> getFeaturedProducts() {
-        String sql = "SELECT id, name, type, kilograms, description, price, image, on_stock, is_featured FROM products WHERE is_featured = 1 LIMIT 4";
+        String sql = "SELECT id, name, type, grams, description, price, image, on_stock, is_featured FROM products WHERE is_featured = TRUE LIMIT 4";
 
         return jdbcTemplate.query(sql, new ProductRowMapper());
     }
@@ -39,7 +39,7 @@ public class JdbcProductRepository implements ProductRepository{
     @SuppressWarnings("null")
     @Override
     public List<Product> filterByTypeAndPrice(String type, Double minPrice, Double maxPrice) {
-        StringBuilder sqlBuilder = new StringBuilder("SELECT id, name, type, kilograms, description, price, image, on_stock, is_featured FROM products WHERE 1=1");
+        StringBuilder sqlBuilder = new StringBuilder("SELECT id, name, type, grams, description, price, image, on_stock, is_featured FROM products WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
 

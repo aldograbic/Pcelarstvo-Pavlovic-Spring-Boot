@@ -14,7 +14,7 @@ public class ProductRowMapper implements RowMapper<Product>{
         product.setId(rs.getInt("id"));
         product.setName(rs.getString("name"));
         product.setType(rs.getString("type"));
-        product.setKilograms(rs.getBigDecimal("kilograms"));
+        product.setGrams(rs.getInt("grams"));
         product.setDescription(rs.getString("description"));
         product.setPrice(rs.getBigDecimal("price"));
         product.setImage(rs.getString("image"));

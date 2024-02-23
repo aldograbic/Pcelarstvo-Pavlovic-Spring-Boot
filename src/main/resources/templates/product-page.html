@@ -68,7 +68,7 @@
               th:text="${product.price} + ' &euro;'"
               class="text-2xl font-semibold"
             ></p>
-            <p th:text="${'Pakiranje: ' + product.kilograms + ' g'}"></p>
+            <p th:text="${'Pakiranje: ' + product.grams + ' g'}"></p>
             <p th:text="${'Kategorija: ' + product.type}"></p>
             <p th:if="${product.onStock}" class="flex items-center">
               <svg

@@ -6,7 +6,7 @@ public class Product {
     private int id;
     private String name;
     private String type;
-    private BigDecimal kilograms;
+    private int grams;
     private String description;
     private BigDecimal price;
     private String image;
@@ -15,11 +15,11 @@ public class Product {
 
     public Product() {}
 
-    public Product(int id, String name, String type, BigDecimal kilograms, String description, BigDecimal price, String image, boolean onStock, boolean isFeatured) {
+    public Product(int id, String name, String type, int grams, String description, BigDecimal price, String image, boolean onStock, boolean isFeatured) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.kilograms = kilograms;
+        this.grams = grams;
         this.description = description;
         this.price = price;
         this.image = image;
@@ -51,12 +51,12 @@ public class Product {
         this.type = type;
     }
 
-    public BigDecimal getKilograms() {
-        return kilograms;
+    public int getGrams() {
+        return grams;
     }
 
-    public void setKilograms(BigDecimal kilograms) {
-        this.kilograms = kilograms;
+    public void setGrams(int grams) {
+        this.grams = grams;
     }
 
     public String getDescription() {
