@@ -483,7 +483,9 @@
             <h1 class="text-2xl font-semibold">
               Proizvodi (<span th:text="${productCount}"></span>)
             </h1>
-            <div class="flex justify-end text-xl dark:text-gray-50">
+            <div
+              class="flex items-center justify-end text-lg md:text-xl dark:text-gray-50"
+            >
               <div
                 x-data="{dropdownMenu: false, openSort: false}"
                 class="relative"

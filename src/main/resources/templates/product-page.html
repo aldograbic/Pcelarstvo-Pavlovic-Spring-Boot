@@ -44,25 +44,30 @@
             class="md:w-96 w-full md:rounded-lg pointer-events-none"
           />
           <div class="flex flex-col gap-4 p-2">
-            <div class="flex items-center">
-              <p th:text="${product.name}" class="text-4xl font-semibold"></p>
-              <svg
-                class="w-8 h-8 fill-amber-300 ml-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path
-                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                />
-                <path d="M0 0h24v24H0z" fill="none" />
-              </svg>
+            <div class="flex flex-col-reverse md:flex-row md:items-center">
               <p
-                th:if="${averageReviewStar != 0.0}"
-                th:text="${averageReviewStar}"
-                class="text-xl font-semibold"
+                th:text="${product.name}"
+                class="text-3xl md:text-4xl font-semibold mt-1 md:mt-0"
               ></p>
-              <p th:unless="${averageReviewStar != 0.0}">0 recenzija</p>
+              <div class="flex items-center">
+                <svg
+                  class="w-8 h-8 fill-amber-300 md:ml-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M0 0h24v24H0V0z" fill="none" />
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                  <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
+                <p
+                  th:if="${averageReviewStar != 0.0}"
+                  th:text="${averageReviewStar}"
+                  class="text-xl font-semibold"
+                ></p>
+                <p th:unless="${averageReviewStar != 0.0}">0 recenzija</p>
+              </div>
             </div>
             <p
               th:text="${product.price} + ' &euro;'"
