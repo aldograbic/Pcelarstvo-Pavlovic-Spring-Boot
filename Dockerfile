@@ -1,5 +1,5 @@
 # Use a Maven image to build the application
-FROM maven:3.8.4-openjdk-21 as builder
+FROM openjdk:21-slim as builder
 WORKDIR /build
 COPY pom.xml .
 COPY src src/
