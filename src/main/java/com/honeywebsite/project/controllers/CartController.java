@@ -98,8 +98,8 @@ public class CartController {
         SessionCreateParams params = SessionCreateParams.builder()
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
             .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl("http://localhost:8080?uspjesno=true")
-            .setCancelUrl("http://localhost:8080/")
+            .setSuccessUrl("https://pcelarstvo-pavlovic-prod.onrender.com/?uspjesno=true")
+            .setCancelUrl("https://pcelarstvo-pavlovic-prod.onrender.com/")
             .addAllLineItem(lineItems)
             .setShippingAddressCollection(
             SessionCreateParams.ShippingAddressCollection.builder()
