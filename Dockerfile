@@ -1,11 +1,11 @@
-# Use a Maven image to build the application
-FROM openjdk:21-slim as builder
-WORKDIR /build
+# Stage 1: Build with Maven (adjust JDK version as needed)
+FROM maven:3.8.4-openjdk-17 as build
+WORKDIR /app
 COPY pom.xml .
-COPY src src/
-RUN mvn package -DskipTests
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Use the OpenJDK 21 image for the application runtime
+# Stage 2: Create the runtime image
 FROM openjdk:21-slim
-COPY --from=builder /build/target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
